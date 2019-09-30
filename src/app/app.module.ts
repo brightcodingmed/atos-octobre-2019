@@ -10,6 +10,8 @@ import { ContentComponent } from './content/content.component';
 import { TableComponent } from './table/table.component';
 import { LayoutComponent } from './layout/layout.component';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import { LayoutComponent } from './layout/layout.component';
     LayoutComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

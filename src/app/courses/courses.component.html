@@ -3,6 +3,17 @@
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis iure velit facilis ipsam facere ut asperiores placeat laboriosam qui quam, ducimus temporibus quis illum suscipit repudiandae reiciendis modi amet! Incidunt.
 </p>
 
-<ul>
-    <li *ngFor="let course of courses"><a href="">{{ course }}</a></li>
+<input [(ngModel)]="course" type="text" placeholder="add new Course ..." class="form-control">
+
+<button class="btn btn-success btn-block" (click)="addCourse()">Add</button>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let course of courses">
+        <a href="">{{ course.title }}</a>
+        {{ course.id }}
+        <div class="text-right">
+
+            <button class="btn btn-dark btn-sm" (click)="deleteCourse(course.id)">delete</button>
+        </div>
+    </li>
 </ul>
