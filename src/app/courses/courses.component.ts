@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import uid from 'uid';
 
 @Component({
@@ -30,7 +31,30 @@ export class CoursesComponent  {
    }
 
    deleteCourse(id) {
-     this.courses = this.courses.filter((course) => course.id !== id );
+
+    Swal.fire({
+      title: 'Are you sure to delete this course?',
+      text: 'You will not be able to recover this imaginary file!',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.value) {
+
+        this.courses = this.courses.filter((course) => course.id !== id );
+        Swal.fire({
+          title: 'Course deleted !',
+          timer: 3000,
+          type: 'success',
+        })
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } 
+    })
+   
+
+    //  
    }
 
 }
