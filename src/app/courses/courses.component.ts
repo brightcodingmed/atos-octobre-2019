@@ -9,5 +9,6 @@ export class CoursesComponent  {
 
   constructor() { }
 
+   courses: string[] = ['Angular', 'ReactJS', 'VueJS'];
 
 }
