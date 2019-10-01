@@ -9,6 +9,7 @@ import uid from 'uid';
 })
 export class CoursesComponent  {
 
+  display = true;
   editable: boolean = false;
   course = {
     id: uid(),
@@ -101,6 +102,10 @@ export class CoursesComponent  {
     else {
       course.vote.disLike = data.value;
     }
+  }
+
+  toggleDisplay() {
+    this.display = !this.display;
   }
 
 }
