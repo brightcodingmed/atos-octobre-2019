@@ -23,20 +23,19 @@
     <div>
         <ul class="list-group" *ngIf="courses.length">
             <li 
-                [ngClass]="{
-                            'list-group-item-success': course.active, 
-                            'list-group-item-warning': !course.active
-                          }"
+            
         
-                class="list-group-item" *ngFor="let course of courses">
-        
+                class="list-group-item" *ngFor="let course of courses; index as i, odd as o, even as e, first as f, last as l">
+                 i: {{ i }} - o: {{ o }} - e: {{ e }} - f: {{ f }} - l: {{ l }}
                 <i 
                    [ngClass]="{'power-enable': course.active, 'power-disable': !course.active}" 
                    (click)="toggleCourse(course)" 
                    class="fa fa-power-off mr-3">
                 </i> 
         
-                <a href="">{{ course.title }}</a>
+                <a href="">
+                    <h3 [ngStyle]="{fontSize: o ? '20px' : '10px'}">{{ course.title }}</h3>
+                </a>
                 
                 <div class="text-right">
         

@@ -9,9 +9,12 @@ import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { TableComponent } from './table/table.component';
 import { LayoutComponent } from './layout/layout.component';
+import { VotesComponent } from './votes/votes.component';
+import { GitusersComponent } from './gitusers/gitusers.component';
 
 import { FormsModule } from '@angular/forms';
-import { VotesComponent } from './votes/votes.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +26,14 @@ import { VotesComponent } from './votes/votes.component';
     ContentComponent,
     TableComponent,
     LayoutComponent,
-    VotesComponent
+    VotesComponent,
+    GitusersComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
