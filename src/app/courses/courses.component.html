@@ -17,43 +17,51 @@
     <i class="fa" [ngClass]="{'fa-list': display, 'fa-th': !display}"></i>
 </button>
 
-<ul class="list-group" *ngIf="courses.length && display">
-    <li 
-        [ngClass]="{
-                    'list-group-item-success': course.active, 
-                    'list-group-item-warning': !course.active
-                  }"
+<div *ngIf="display; then listCourse else gridCourse"></div>
 
-        class="list-group-item" *ngFor="let course of courses">
-
-        <i 
-           [ngClass]="{'power-enable': course.active, 'power-disable': !course.active}" 
-           (click)="toggleCourse(course)" 
-           class="fa fa-power-off mr-3">
-        </i> 
-
-        <a href="">{{ course.title }}</a>
+<ng-template #listCourse>
+    <div>
+        <ul class="list-group" *ngIf="courses.length">
+            <li 
+                [ngClass]="{
+                            'list-group-item-success': course.active, 
+                            'list-group-item-warning': !course.active
+                          }"
         
-        <div class="text-right">
-
-            <button class="btn btn-warning btn-sm mr-1" (click)="editCourse(course)">Edit</button>
-            <button class="btn btn-dark btn-sm" (click)="deleteCourse(course.id)">delete</button>
-        </div>
+                class="list-group-item" *ngFor="let course of courses">
         
-        <div class="">
-            {{ course.vote | json }}
-           <app-votes 
-               [like]="course.vote.like" 
-               [disLike]="course.vote.disLike"
-            (likeChildToParent)="updateLike($event, course)"
-            >
-            </app-votes>
-        </div>
+                <i 
+                   [ngClass]="{'power-enable': course.active, 'power-disable': !course.active}" 
+                   (click)="toggleCourse(course)" 
+                   class="fa fa-power-off mr-3">
+                </i> 
         
-    </li>
-</ul>
+                <a href="">{{ course.title }}</a>
+                
+                <div class="text-right">
+        
+                    <button class="btn btn-warning btn-sm mr-1" (click)="editCourse(course)">Edit</button>
+                    <button class="btn btn-dark btn-sm" (click)="deleteCourse(course.id)">delete</button>
+                </div>
+                
+                <div class="">
+                    {{ course.vote | json }}
+                   <app-votes 
+                       [like]="course.vote.like" 
+                       [disLike]="course.vote.disLike"
+                    (likeChildToParent)="updateLike($event, course)"
+                    >
+                    </app-votes>
+                </div>
+                
+            </li>
+        </ul>
+    </div>
+</ng-template>
 
-<div class="row" *ngIf="!display">
+
+<ng-template #gridCourse>
+   <div class="row">
     <div class="col-md-4" *ngFor="let course of courses">
         <div class="card">
             <img class="card-img-top" src="http://lorempixel.com/400/200" alt="">
@@ -73,7 +81,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
+</ng-template>
+
+
 
 <div class="alert alert-warning" *ngIf="!courses.length">
     no courses yet!
