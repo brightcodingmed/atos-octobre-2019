@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import uid from 'uid';
-
+ 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
@@ -9,25 +9,28 @@ import uid from 'uid';
 })
 export class CoursesComponent  {
 
-  course = null;
+  editable: boolean = false;
+  course = {
+    id: uid(),
+    title: '',
+    active: false,
+    vote: {like: 0, disLike: 0}
+  };
 
   constructor() { }
 
    courses: any[] = [
-     {id: 1, title: 'Learn Angular'},
-     {id: 2, title: 'Learn VueJS'},
-     {id: 3, title: 'Learn Spring'},
-     {id: 4, title: 'Learn Symfony 4'}
+     {id: 1, title: 'Learn Angular', active: false, vote: {like: 9, disLike: 2}},
+     {id: 2, title: 'Learn VueJS', active: false, vote: {like: 100, disLike: 0}},
+     {id: 3, title: 'Learn Spring', active: true, vote: {like: 80, disLike: 1}},
+     {id: 4, title: 'Learn Symfony 4', active: false, vote: {like: 20, disLike: 0}}
    ];
 
    addCourse() {
 
-    let myCourse = {
-      id: uid(10),
-      title: this.course
-    }
-     this.courses = [myCourse, ...this.courses];
-     this.course = null;
+  
+     this.courses = [this.course, ...this.courses];
+     this.initCourse();
    }
 
    deleteCourse(id) {
@@ -56,5 +59,48 @@ export class CoursesComponent  {
 
     //  
    }
+
+   editCourse(course) {
+     console.log(course);
+     this.editable = true;
+     this.course = course;
+   }
+
+   updateCourse() {
+     console.log('updated');
+     this.editable = false;
+     this.initCourse();
+   }
+
+   initCourse() {
+    this.course = {
+      id: uid(),
+      title: '',
+      active: false,
+      vote: {like: 0, disLike: 0}
+    }
+   }
+
+   toggleCourse(course) {
+     
+      course.active = !course.active;
+   }
+
+   incLike(course) {
+     course.vote.like++; 
+   }
+
+   incDisLike(course) {
+    course.vote.disLike++; 
+  }
+
+  updateLike(data, course){
+    if(data.type) {
+      course.vote.like = data.value;
+    }
+    else {
+      course.vote.disLike = data.value;
+    }
+  }
 
 }

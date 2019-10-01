@@ -11,6 +11,7 @@ import { TableComponent } from './table/table.component';
 import { LayoutComponent } from './layout/layout.component';
 
 import { FormsModule } from '@angular/forms';
+import { VotesComponent } from './votes/votes.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     ContentComponent,
     TableComponent,
-    LayoutComponent
+    LayoutComponent,
+    VotesComponent
   ],
   imports: [
     BrowserModule,

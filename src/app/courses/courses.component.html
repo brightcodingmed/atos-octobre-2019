@@ -3,17 +3,52 @@
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis iure velit facilis ipsam facere ut asperiores placeat laboriosam qui quam, ducimus temporibus quis illum suscipit repudiandae reiciendis modi amet! Incidunt.
 </p>
 
-<input [(ngModel)]="course" type="text" placeholder="add new Course ..." class="form-control">
+<input [(ngModel)]="course.title" type="text" placeholder="add new Course ..." class="form-control">
 
-<button class="btn btn-success btn-block" (click)="addCourse()">Add</button>
+<button *ngIf="editable" class="btn btn-danger btn-block" (click)="updateCourse()">Update</button>
+<button *ngIf="!editable" class="btn btn-success btn-block" (click)="addCourse()">Add</button>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let course of courses">
+
+<div class="alert alert-info" *ngIf="courses.length">
+    {{ courses.length }} Courses
+</div>
+
+<ul class="list-group" *ngIf="courses.length">
+    <li 
+        [ngClass]="{
+                    'list-group-item-success': course.active, 
+                    'list-group-item-warning': !course.active
+                  }"
+
+        class="list-group-item" *ngFor="let course of courses">
+
+        <i 
+           [ngClass]="{'power-enable': course.active, 'power-disable': !course.active}" 
+           (click)="toggleCourse(course)" 
+           class="fa fa-power-off mr-3">
+        </i> 
+
         <a href="">{{ course.title }}</a>
-        {{ course.id }}
+        
         <div class="text-right">
 
+            <button class="btn btn-warning btn-sm mr-1" (click)="editCourse(course)">Edit</button>
             <button class="btn btn-dark btn-sm" (click)="deleteCourse(course.id)">delete</button>
         </div>
+        
+        <div class="">
+            {{ course.vote | json }}
+           <app-votes 
+               [like]="course.vote.like" 
+               [disLike]="course.vote.disLike"
+            (likeChildToParent)="updateLike($event, course)"
+            >
+            </app-votes>
+        </div>
+        
     </li>
 </ul>
+
+<div class="alert alert-warning" *ngIf="!courses.length">
+    no courses yet!
+</div>
