@@ -1,8 +1,65 @@
 
 
 <div class="row mt-3">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h1>List of Posts</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="displayForm()" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+
+<div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+</div>
+
+<div class="row my-3" *ngIf="display">
+    <div class="col-md-6 mx-auto">
+
+        <form #myForm="ngForm">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input  
+               required
+               minlength="4"
+              
+               name="title"
+               pattern="[a-zA-Z0-9 ]*"
+               #myTitle="ngModel" 
+               (change)="log(myTitle)" 
+               [(ngModel)]="myPost.title"
+               id="title" 
+               type="text" 
+               class="form-control">
+            <div *ngIf="myTitle.invalid && myTitle.touched" class="alert alert-danger">
+                <div *ngIf="myTitle.errors.required">This field is required !</div>
+                <div *ngIf="myTitle.errors.pattern">This field is not respect the pattern !</div>
+                <div *ngIf="myTitle.errors.minlength">This field sould be great then {{ myTitle.errors.minlength.actualLength }} / {{ myTitle.errors.minlength.requiredLength }} caracters !</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="body">Body</label>
+            <textarea required #myBody="ngModel" [(ngModel)]="myPost.body" name="body" id="body" rows="3" class="form-control"></textarea>
+            <div *ngIf="myBody.invalid && myBody.touched" class="alert alert-danger">
+                    <div *ngIf="myBody.errors.required">This field is required !</div>
+            </div>
+        </div>
+
+        <button *ngIf="editable" (click)="updatePost(myForm)" class="btn btn-warning btn-block">
+            <i class="fa fa-refresh"></i> update Post
+        </button>
+
+        <button *ngIf="!editable" (click)="createPost(myForm)" class="btn btn-primary btn-block">
+                <i class="fa fa-send"></i> Add Post
+            </button>
+
+
+    </form>
     </div>
 </div>
 
@@ -18,16 +75,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let post of posts">
+                <tr *ngFor="let post of posts" (dblclick)="deletePost(post.id)">
                     <td>{{ post.id }}</td>
                     <td>{{ post.title }}</td>
                     <td>{{ post.body }}</td>
                     <td class="text-right" nowrap>
-                        <button class="btn btn-sm btn-warning mr-1">
+                        <button (click)="editPost(post)" class="btn btn-sm btn-warning mr-1">
                             <i class="fa fa-pencil"></i>
                         </button>
 
-                        <button class="btn btn-sm btn-danger">
+                        <button (click)="deletePost(post.id)" class="btn btn-sm btn-danger">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

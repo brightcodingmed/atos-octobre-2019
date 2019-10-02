@@ -1,3 +1,4 @@
+import { Post } from './post';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -12,6 +13,18 @@ export class PostService {
 
   _getPosts() {
     return this.http.get(this.url);
+  }
+
+  _createPost(data: Post) {
+      return this.http.post(this.url, data);
+  }
+
+  _deletePost(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  _updatePost(post: Post) {
+    return this.http.put(`${this.url}/${post.id}`, post);
   }
 
 }

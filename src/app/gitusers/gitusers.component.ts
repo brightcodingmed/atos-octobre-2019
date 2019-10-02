@@ -24,7 +24,7 @@ export class GitusersComponent implements OnInit {
   }
 
   searchUser() {
-    this.userService._searchUser(this.user).subscribe((users) => {
+    this.userService._searchUser(this.user).subscribe((users: any) => {
      this.users = users.items;
      console.log(users);
     })

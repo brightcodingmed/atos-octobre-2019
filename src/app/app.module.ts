@@ -11,10 +11,18 @@ import { TableComponent } from './table/table.component';
 import { LayoutComponent } from './layout/layout.component';
 import { VotesComponent } from './votes/votes.component';
 import { GitusersComponent } from './gitusers/gitusers.component';
+import { PostsComponent } from './posts/posts.component';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { PostsComponent } from './posts/posts.component';
+import { RouterModule, Route } from '@angular/router';
+
+const routes: Route[] = [
+  { path: "", redirectTo: '/github', pathMatch: 'full' },
+  { path: "github", component: GitusersComponent },
+  { path: "posts", component: PostsComponent },
+  { path: "courses", component: CoursesComponent }
+]
 
 @NgModule({
   declarations: [
@@ -33,7 +41,8 @@ import { PostsComponent } from './posts/posts.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
